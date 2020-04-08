@@ -1,0 +1,31 @@
+{
+  "name": "schedule",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaye5/Schedule.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaye5/Schedule/issues"
+  },
+  "homepage": "https://github.com/kaye5/Schedule#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "nodemon": "^1.19.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "mongoose": "^5.7.5",
+    "moment-timezone": "^0.5.26",
+    "jsonwebtoken": "^8.5.1",
+    "dotenv": "^8.1.0"
+  }
+}
