@@ -23,7 +23,7 @@ passport.use('jwtAdmin',new JWTStrategy({
     },
     async(payload, done) =>{
       try {
-        let user = await userDB.findOne(payload.user)
+        let user = await userDB.findOne({id : payload.user.id,password : payload.user.password})
         if (!user && user.role != 'admin') return done(null, false, { message: "Invalid username or password" })
         if (payload.exp > Date.now()) return done(null, false, { message: "Your session has expired!" });
         done(null, user);
@@ -39,7 +39,7 @@ passport.use('jwtUser',new JWTStrategy({
 },
 async(payload, done) =>{
   try {
-    let user = await userDB.findOne(payload.user)
+    let user = await userDB.findOne({id : payload.user.id,password : payload.user.password})
     if (!user) return done(null, false, { message: "Invalid username or password" })
     if (payload.exp > Date.now()) return done(null, false, { message: "Your session has expired!" });
     done(null, user);

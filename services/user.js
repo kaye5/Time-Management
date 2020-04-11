@@ -1,12 +1,7 @@
+const jwt = require('jsonwebtoken')
+const userDB = require('../database/user')
 class User {
     constructor(){}
-    /**
-     * 
-     * @param {Mongoose ObjectID} id 
-     */
-    getProfile(id){
-
-    }
     /**
      * 
      * @param {JSON} data 
@@ -19,7 +14,8 @@ class User {
      * @param {JSON} userData 
      */
     Login(userData){
-
+        const token = jwt.sign({user : userData},process.env.JWTSECRET);
+        return token; 
     }
 }
 module.exports = User

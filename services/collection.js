@@ -1,4 +1,5 @@
 const collectionDB = require("../database/collection");
+const Participant = require('./participant')
 const mongoose = require('mongoose')
 class Collection{
     constructor(){
@@ -6,7 +7,13 @@ class Collection{
     createCollection(data,userid){
         try{
             data.user = mongoose.Types.ObjectId(userid);
-            return collectionDB.create(data)
+            collectionDB.create(data,(err,res)=>{
+                if(err)
+                    throw err;
+                let participant = new Participant();
+                participant.addParticipant(data.user,res._id);
+            })
+            return true
         } catch(err){
             console.log(err)
             return false
@@ -27,6 +34,17 @@ class Collection{
             return collectionDB.findOneAndUpdate({_id},{$set : data})
         }catch(err){
             console.log(err);
+            return false
+        }
+    }
+    async validatePin(collectionID,pin){
+        try{
+            if(await collectionDB.countDocuments({_id : collectionID,pin})!=0)
+                return true
+            else 
+                return false
+        }catch(err){
+            console.log(err)
             return false
         }
     }

@@ -2,14 +2,15 @@ const mongoose = require("mongoose")
 
 scheduleSchema = new mongoose.Schema({
     id : String,
-    collection : {
+    collections : {
         type : mongoose.Types.ObjectId,
         ref : 'collection'
     },
     title : String,
     subtitle : String,
-    start_date : Date,
+    startDate : Date,
     deadline : Date,
+    status : String,
     dateCreated : {
         type : Date,
         default : Date.now
@@ -18,4 +19,4 @@ scheduleSchema = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model("schedule",collectionSchema)
+module.exports = mongoose.model("schedule",scheduleSchema)

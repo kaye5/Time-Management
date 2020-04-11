@@ -2,15 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/collection')
-const {requireAuth,requireLogin} = require('../config/admin');
+const {requireAuth} = require('../config/admin');
 
-router.get('/view',controller.viewCollection);
-router.post('/create',controller.createCollection);
-router.put('/update',controller.updateCollection);
+router.get('/view',requireAuth,controller.viewCollection);
+router.post('/create',requireAuth,controller.createCollection);
+router.put('/update',requireAuth,controller.updateCollection);
 
-router.get('/participant/view',controller.viewParticipant);
-router.put('/participant/update',controller.editParticipant);
-router.put('/participant/join',controller.joinCollection);
-router.put('/participant/add',controller.addParticipant);
-
+router.get('/participant/view',requireAuth,controller.viewParticipant);
+router.put('/participant/update',requireAuth,controller.editParticipant);
+router.put('/participant/join',requireAuth,controller.joinCollection);
+router.put('/participant/add',requireAuth,controller.addParticipant);
+router.put('/participant/validate',requireAuth,controller.validateParticipant);
 module.exports = router; 

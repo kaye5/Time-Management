@@ -2,9 +2,9 @@ const mongoose = require("mongoose")
 
 const participantSchema = new mongoose.Schema({
     _id : String,
-    collection : {
+    collections : {
         type: mongoose.Schema.Types.ObjectId,
-        ref : 'collection'
+        refPath : 'collection'
     },
     user : {
         type: mongoose.Schema.Types.ObjectId,
