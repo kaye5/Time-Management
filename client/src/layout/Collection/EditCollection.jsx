@@ -29,7 +29,7 @@ export default function EditCollection(props){
     }
     const handleDelete = async () =>{
         try {   
-            await axios.put('/collection/delete',{collectionID : data._id})
+            await Axios.put('/collection/delete',{collectionID : data._id})
             props.history.goBack()
         } catch(err){
             console.log(err)
