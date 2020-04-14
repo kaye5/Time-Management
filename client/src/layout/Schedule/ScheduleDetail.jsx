@@ -68,6 +68,10 @@ export default function ScheduleDetail(props){
                 {renderInput('datetime-local','deadline',moment(data.deadline).format('YYYY-MM-DDThh:mm'))}
                 <textarea name='description' onChange={handleChange} rows='5' maxLength='200' className='form-control my-3' value={data.description}
                     style={{maxHeight:'149px',minHeight:'50px'}}
+                    disabled=
+                    {
+                        edit ? false : true
+                    }
                 />
 
                 <div className='my-2'>
