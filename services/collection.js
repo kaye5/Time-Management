@@ -60,6 +60,15 @@ class Collection{
             return false
         }
     }
+    deleteCollection(collectionID,data){
+        try{
+            let _id = mongoose.Types.ObjectId(collectionID)
+            return collectionDB.findOneAndDelete({_id})
+        }catch(err){
+            console.log(err);
+            return false
+        }
+    }
     async validatePin(collectionID,pin){
         try{
             if(await collectionDB.countDocuments({_id : collectionID,pin})!=0)

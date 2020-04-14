@@ -24,10 +24,13 @@ export default function CreateAccount(){
                 data.login && <Redirect to='/login'/>
             }
             <form onSubmit={submit}>
+            <div className="form-group">
+                    <label>Your Name</label>
+                    <input type='text' name='name' className="form-control"  placeholder="Your Name" onChange={handleChange}/>                    
+                </div>
                 <div className="form-group">
                     <label>ID/Username</label>
-                    <input type='number' name='nim' className="form-control"  placeholder="Enter email" onChange={handleChange}/>
-                    
+                    <input type='number' name='nim' className="form-control"  placeholder="ID" onChange={handleChange}/>                    
                 </div>
                 <div className="form-group">
                     <label>Password</label>

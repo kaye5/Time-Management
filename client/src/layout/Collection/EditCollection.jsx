@@ -21,11 +21,20 @@ export default function EditCollection(props){
             })
             if(res.data)
                 setData({done : true})
+            props.history.goBack()
         } catch(err){
             console.log(err)
             setData({...data , err : true})
         }
-        props.history.goBack()
+    }
+    const handleDelete = async () =>{
+        try {   
+            await axios.put('/collection/delete',{collectionID : data._id})
+            props.history.goBack()
+        } catch(err){
+            console.log(err)
+            setData({...data , err : true})
+        }
     }
     if(props.location.state)
     return (
@@ -40,6 +49,7 @@ export default function EditCollection(props){
 
             <button className='btn btn-primary mt-3'>save</button>
         </form>
+        <button className='btn btn-primary mt-3' onClick={handleDelete}>Delete</button>
         <div className='mt-4'>
             <h3>Participant</h3>
             <Participant collID={data._id}/>

@@ -30,6 +30,21 @@ exports.updateCollection = async(req,res,next)=>{
     }
     res.sendStatus(200);
 }
+
+
+/**
+ * @description PUT
+ */
+exports.deleteCollection = async(req,res,next)=>{
+    let collection = new Collection();
+    collection = await collection.deleteCollection(req.body.collectionID);
+    if(!collection){
+        res.sendStatus(500);
+        return -1
+    }
+    res.sendStatus(200);
+}
+
 /**
  * @description PUT /participant/join
  */
@@ -72,6 +87,7 @@ exports.editParticipant = async(req,res,next)=>{
         res.sendStatus(500)
     }
 }
+
 /**
  * @description PUT /participant/add
  * add participant

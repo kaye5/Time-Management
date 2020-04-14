@@ -7,6 +7,7 @@ const {requireAuth} = require('../config/admin');
 router.get('/view',requireAuth,controller.viewCollection);
 router.post('/create',requireAuth,controller.createCollection);
 router.put('/update',requireAuth,controller.updateCollection);
+router.put('/delete',requireAuth,controller.deleteCollection);
 
 router.get('/participant/view',requireAuth,controller.viewParticipant);
 router.put('/participant/update',requireAuth,controller.editParticipant);
