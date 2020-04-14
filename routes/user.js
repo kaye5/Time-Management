@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/user')
 const {requireAuth,requireLogin} = require('../config/user');
-router.get('/create',requireAuth,controller.createAccount)
+router.post('/create',controller.createAccount)
 router.get('/profile',requireAuth,controller.viewProfile)
 router.post('/login',requireLogin,controller.login)
 router.post('/logout',requireAuth,controller.logout)
