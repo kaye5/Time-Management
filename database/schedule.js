@@ -11,6 +11,7 @@ scheduleSchema = new mongoose.Schema({
     startDate : Date,
     deadline : Date,
     status : String,
+    description : String,
     dateCreated : {
         type : Date,
         default : Date.now

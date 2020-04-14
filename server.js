@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const app = express();
+
 app.use(
     session({
       secret: 'secret',
@@ -8,7 +9,8 @@ app.use(
       saveUninitialized: true
     })
 );
-
+const cors = require('cors')
+app.use(cors())
 //env
 require('dotenv').config({path: __dirname + '/.env'});
 

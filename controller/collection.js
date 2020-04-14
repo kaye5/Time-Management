@@ -5,7 +5,7 @@ const Participant = require('../services/participant')
  */
 exports.viewCollection = async(req,res,next)=>{
     let collection = new Collection();
-    res.send(await collection.getCollection(req.user._id));
+    res.send(await collection.getCollection(req.user));
 }
 /**
  * @description POST
@@ -65,7 +65,7 @@ exports.viewParticipant = async(req,res,next)=>{
 exports.editParticipant = async(req,res,next)=>{
     try {
         let participant = new Participant();
-        await participant.editParticipant(req.body.user,req.body.collectionID)
+        await participant.editParticipant(req.body.participantID)
         res.sendStatus(200)
     }catch(err){
         console.log(err)
@@ -93,7 +93,6 @@ exports.validateParticipant = async(req,res,next)=>{
     try{
         let participant = new Participant();
         let isValid = await participant.validateParticipant(req.body.collectionID,req.user._id)
-        console.log(isValid)
         if(isValid)
             res.sendStatus(200);
         else 

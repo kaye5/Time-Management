@@ -7,7 +7,12 @@ class User {
      * @param {JSON} data 
      */
     createAccount(data){
-
+        try {
+            return userDB.create(data)
+        } catch(err){
+            console.log(err)
+            return false
+        }        
     }
     /**
      * 

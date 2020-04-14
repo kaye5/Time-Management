@@ -1,4 +1,5 @@
 const collectionDB = require("../database/collection");
+const participantDB = require("../database/participant");
 const Participant = require('./participant')
 const mongoose = require('mongoose')
 class Collection{
@@ -19,14 +20,36 @@ class Collection{
             return false
         }
     }
-    getCollection(userid){
-        try {
-            let collection = collectionDB.find({user : mongoose.Types.ObjectId(userid)})
-            return collection;
-        }catch(err){
-            console.log(err)
-            return false
+    async getCollection(user){
+        if(user.role == 'admin'){
+            try {
+                let collection = collectionDB.find({user : mongoose.Types.ObjectId(user._id)})
+                return collection;
+            }catch(err){
+                console.log(err)
+                return false
+            }
+        } else {
+            let collection = await participantDB.aggregate([
+                {
+                    $match : {user : mongoose.Types.ObjectId(user._id)}
+                },
+                {
+                    $lookup : {
+                        from : 'collections',
+                        localField : "collections",
+                        foreignField : '_id',
+                        as : 'collections'
+                    }
+                }
+            ])
+            var item = [];
+            collection.forEach(el => {
+                item.push(el.collections[0])
+            })
+            return item
         }
+        
     }
     updateCollection(collectionID,data){
         try{
@@ -49,4 +72,4 @@ class Collection{
         }
     }
 }
-module.exports = Collection
+module.exports = Collection;

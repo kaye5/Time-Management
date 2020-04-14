@@ -3,7 +3,7 @@ const moment = require('moment-timezone')
 const mongoose = require('mongoose')
 const scheduleStat = ['waiting','on going','completed','overdue']
 
-const cron = require('node-schedule');
+const nodeSchedule = require('node-schedule');
 
 class Schedule{
     constructor(){}
@@ -11,8 +11,13 @@ class Schedule{
      * 
      * @param {Mongoose ObjectID} collectionID
      */
-    getSchedule(collectionID){
-        return scheduleDB.find({collections : mongoose.Types.ObjectId(collectionID)})
+    getSchedule(collectionID,query){        
+        return scheduleDB.find({collections : mongoose.Types.ObjectId(collectionID),
+            $and : [
+                {status : {$regex : query.status}},
+                {status : {$ne : query.hide}}
+            ]
+        }).sort(query.startDate ? {startDate : query.startDate} : {deadline : query.deadline})
     }
     /**
      * 
@@ -43,6 +48,13 @@ class Schedule{
             scheduleDB.findOneAndUpdate({_id : id},{$set : data},(err,res)=>{
                 if(err)
                     throw err
+                if(data.status == 'completed'){
+                    if(nodeSchedule.scheduledJobs[res._id]){                        
+                        nodeSchedule.scheduledJobs[res._id].cancel()                        
+                    }
+                        
+                    return -1
+                }                    
                 this.checkTime(res._id);
             });            
             return true
@@ -64,7 +76,7 @@ class Schedule{
         let deadline = schedule.deadline
         if( moment(moment.now()).isAfter(startDate) && moment(moment.now()).isBefore(deadline) ){
             console.log('on going')
-            await createSchedule(id,scheduleStat[1],startDate,deadline);
+            await setTimer(id,scheduleStat[1],startDate,deadline);
             setStatus(id,scheduleStat[1])
         }
         else if(moment(moment.now()).isAfter(deadline)){
@@ -73,7 +85,7 @@ class Schedule{
         } 
         else if(moment(moment.now()).isBefore(startDate)){
             console.log('waiting')
-            await createSchedule(id,scheduleStat[0],startDate,deadline);
+            await setTimer(id,scheduleStat[0],startDate,deadline);
             setStatus(id,scheduleStat[0])
         }
     }
@@ -87,19 +99,19 @@ async function setStatus(id,status) {
         return false
     }
 }
-function createSchedule(shceduleID,status,startDate,deadline){
+function setTimer(shceduleID,status,startDate,deadline){
     if(status == scheduleStat[2])
         return -1
     else if (status == scheduleStat[0]){
         var date = new Date(startDate)
-        cron.scheduleJob(String(shceduleID),date,res=>{
+        nodeSchedule.scheduleJob(String(shceduleID),date,res=>{
             console.log(res);
             setStatus(shceduleID,scheduleStat[1])
         })
     }
     else if (status == scheduleStat[1]){
         var date = new Date(deadline)
-        cron.scheduleJob(String(shceduleID),date,res=>{
+        nodeSchedule.scheduleJob(String(shceduleID),date,res=>{
             console.log(res);
             setStatus(shceduleID,scheduleStat[3])
         })

@@ -2,7 +2,7 @@ const Schedule = require('../services/schedule')
 exports.viewSchedule = async(req,res,next)=>{
     try {
         let schedule = new Schedule();
-        res.send(await schedule.getSchedule(req.params.collectionID));
+        res.send(await schedule.getSchedule(req.params.collectionID,req.query));
     }catch(err){
         console.log(err)
         res.sendStatus(500)
@@ -12,7 +12,6 @@ exports.viewSchedule = async(req,res,next)=>{
 exports.createSchedule = async(req,res,next)=>{
     try {
         let schedule = new Schedule();
-        
         await schedule.createSchedule(req.body.collectionID,req.body.data);
         res.sendStatus(200);
     }catch(err){
