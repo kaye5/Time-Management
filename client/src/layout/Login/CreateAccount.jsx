@@ -41,7 +41,7 @@ export default function CreateAccount(){
                                     <p>{err}</p>
                             </div>
                 }                
-                <button type="submit" className="btn btn-primary">Craete Account</button>
+                <button type="submit" className="btn btn-primary">Create Account</button>
             </form>
         </React.Fragment>
     )
