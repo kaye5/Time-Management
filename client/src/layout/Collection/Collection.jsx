@@ -43,6 +43,7 @@ export default function Collection(){
         <React.Fragment>
             <h1>My Collection</h1>
             {
+                Auth.isAdmin() && 
                 <div className='my-4'>
                     <button className='btn btn-primary' href='/collection/create' onClick={toogle}>+ Create new Collection</button>
                 </div>

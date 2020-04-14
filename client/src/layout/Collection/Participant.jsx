@@ -30,10 +30,10 @@ export default function Participant(props){
             })
         }catch(err){
             console.log(err)
+            seterr('User not found')
         }
         setAdd(false)
         setChange(!change)
-        seterr('User not found')
     }
 
     function renderAdd(){
