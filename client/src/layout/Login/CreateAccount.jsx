@@ -30,7 +30,7 @@ export default function CreateAccount(){
                 </div>
                 <div className="form-group">
                     <label>ID/Username</label>
-                    <input type='number' name='nim' className="form-control"  placeholder="ID" onChange={handleChange}/>                    
+                    <input type='number' name='id' className="form-control"  placeholder="ID" onChange={handleChange}/>                    
                 </div>
                 <div className="form-group">
                     <label>Password</label>
