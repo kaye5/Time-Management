@@ -29,13 +29,13 @@ export default function Login(){
             }
             <form onSubmit={submit}>
                 <div className="form-group">
-                    <label>ID/Username</label>
-                    <input type='number' name='nim' className="form-control"  placeholder="ID / Username" onChange={handleChange}/>
+                    <label>ID</label>
+                    <input type='number' name='nim' className="form-control"  placeholder="ID / Username" onChange={handleChange} required/>
                     
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control"  placeholder="Password" name='password' onChange={handleChange}/>
+                    <input type="password" className="form-control"  placeholder="Password" name='password' onChange={handleChange} required/>
                 </div>
                 {
                     err && <div className='alert alert-danger'>

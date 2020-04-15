@@ -26,15 +26,15 @@ export default function CreateAccount(){
             <form onSubmit={submit}>
             <div className="form-group">
                     <label>Your Name</label>
-                    <input type='text' name='name' className="form-control"  placeholder="Your Name" onChange={handleChange}/>                    
+                    <input type='text' name='name' className="form-control"  placeholder="Your Name" onChange={handleChange} required/>                    
                 </div>
                 <div className="form-group">
-                    <label>ID/Username</label>
-                    <input type='number' name='id' className="form-control"  placeholder="ID" onChange={handleChange}/>                    
+                    <label>ID</label>
+                    <input type='number' name='id' className="form-control"  placeholder="ID" onChange={handleChange} required/>      
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control"  placeholder="Password" name='password' onChange={handleChange}/>
+                    <input type="password" className="form-control"  placeholder="Password" name='password' onChange={handleChange} required/>
                 </div>
                 {
                     err && <div className='alert alert-danger'>

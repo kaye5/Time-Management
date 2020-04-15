@@ -7,6 +7,14 @@ export default function CreateSchedule(props){
         setData({...data, [ev.target.name] : ev.target.value});
     }
 
+    function checkDateValid(){
+        if(data.deadline < data.startDate){
+            setData({...data,err : "Please provide a valid date"})
+            return false 
+        }
+        return true
+    }
+
     function renderInput(type,name){
         return (
             <div className='my-3'>
@@ -21,10 +29,13 @@ export default function CreateSchedule(props){
     }
     const handleSubmit = async (ev) =>{
         ev.preventDefault();
+        if(!checkDateValid())
+            return -1
         if(!data.startDate && !data.deadline){
             setData({...data , err : 'Please fill all the input.'})
             return -1 
-        }            
+        }
+        console.log('1')
         try {
             await axios.post('/schedule/create',{
                 collectionID : props.location.state.collID,
@@ -43,7 +54,7 @@ export default function CreateSchedule(props){
             }
             <button className='btn btn-info mb-4' onClick={()=>props.history.goBack()}>Go back</button>
             <h3>Create New Schedule</h3>
-            <form>
+            <form onSubmit={handleSubmit}>
                 {renderInput('text','title')}
                 {renderInput('text','subtitle')}
                 {renderInput('datetime-local','startDate')}
@@ -51,6 +62,7 @@ export default function CreateSchedule(props){
 
                 <label className='font-weight-bold'>Description</label>
                 <textarea name='description' onChange={handleChange} rows='5' maxLength='200' className='form-control my-3'
+                    required
                     style={{maxHeight:'149px',minHeight:'50px'}}
                 />
                 {
@@ -60,7 +72,7 @@ export default function CreateSchedule(props){
                     </div>
                 }
                 
-                <button className='btn btn-primary mt-3' onClick={handleSubmit}>Create</button>
+                <button className='btn btn-primary mt-3'>Create</button>
 
             </form>
         </React.Fragment>
