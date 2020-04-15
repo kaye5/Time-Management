@@ -6,8 +6,11 @@ class User {
      * 
      * @param {JSON} data 
      */
-    createAccount(data){
+    async createAccount(data){
         try {
+            let count = await userDB.countDocuments({id : data.id})
+            if(count > 0 )
+                return false
             return userDB.create(data)
         } catch(err){
             console.log(err)
