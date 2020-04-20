@@ -3,10 +3,12 @@ import axios from 'axios'
 import { Link } from 'react-router-dom';
 import CreateCollection from './CreateCollection';
 import Auth from '../../modules/Auth';
+import CreateUser from './CreateUser';
 
 export default function Collection(){
     const [colls,setColls] = React.useState([]);
     const[create,setCreate] = React.useState(false)
+    const[newUser,setNew] = React.useState(false)
     async function getData(){
         try {
             let res = await axios.get('/collection/view');
@@ -21,7 +23,9 @@ export default function Collection(){
     const toogle = () =>{
         setCreate(!create)
     }
-    
+    const toogleUsr = () => {
+        setNew(!newUser)
+    }
     React.useEffect(()=>{
         getData();
     },[create])
@@ -45,13 +49,17 @@ export default function Collection(){
             {
                 Auth.isAdmin() && 
                 <div className='my-4'>
-                    <button className='btn btn-primary' href='/collection/create' onClick={toogle}>+ Create new Collection</button>
+                    <button className='btn btn-primary' onClick={toogle}>+ Create new Collection</button>
+                    <button className='btn btn-primary ml-2' onClick={toogleUsr}>New User</button>
                 </div>
             }        
             
             <div className='p-4 my-4'>
                 {
                     create && <CreateCollection close={toogle}/>
+                }
+                {
+                    newUser && <CreateUser close={toogleUsr} />
                 }
             </div>
             <table className='table table-hover'>

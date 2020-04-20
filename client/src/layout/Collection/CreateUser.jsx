@@ -1,9 +1,8 @@
 import React from 'react';
 import Axios from 'axios';
-import { Redirect } from 'react-router-dom';
-export default function CreateAccount(){
+export default function CreateUser(props){
     const [data,setData] = React.useState({
-        role : 'user'
+        role : 'admin'
     })
     const [err,setErr] = React.useState(false)
     const handleChange = ev =>{
@@ -23,7 +22,7 @@ export default function CreateAccount(){
     return(
         <React.Fragment>
             {
-                data.login && <Redirect to='/login'/>
+                data.login && props.close()
             }
             <form onSubmit={submit}>
             <div className="form-group">
@@ -38,13 +37,21 @@ export default function CreateAccount(){
                     <label>Password</label>
                     <input type="password" className="form-control"  placeholder="Password" name='password' onChange={handleChange} required/>
                 </div>
+                <div className="form-group">
+                    <label>Role</label>
+                    <select name='role' onChange={handleChange} required className='form-control'>
+                        <option value='admin'>Admin</option>
+                        <option value='user'>User</option>
+                    </select>
+                </div>
                 {
                     err && <div className='alert alert-danger'>
-                                    <p>{err}</p>
-                            </div>
+                        <p>{err}</p>
+                    </div>
                 }                
-                <button type="submit" className="btn btn-primary">Create Account</button>
+                <button type="submit" className="btn btn-primary">Create Account</button>                
             </form>
+            <button className="btn btn-danger mt-1" onClick={()=>props.close()}>Cancle</button>
         </React.Fragment>
     )
 }

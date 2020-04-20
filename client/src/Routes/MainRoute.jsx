@@ -23,6 +23,7 @@ function MainRoute(){
             <UserPrivateRoute  path='/collection/join/:id' component={(props)=><JoinCollection {...props}/>}/>
             <UserPrivateRoute  path='/collection/edit' component={(props)=><EditCollection {...props}/>}/>
             <UserPrivateRoute  path='/collection/:id' component={(props) => <Schedule {...props} />} />
+            <UserPrivateRoute exact path='/user/create' component={()=><Collection />}/>
             <UserPrivateRoute exact path='/collection' component={()=><Collection />}/>
             
             <Route exact path='/login' component={()=> <Login /> } />
