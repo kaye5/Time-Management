@@ -1,12 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
+moment.tz.setDefault('Asia/Jakarta');
 export default function ScheduleDetail(props){
     const [data,setData] = React.useState(props.location.state)
     const [edit,setEdit] = React.useState(false)
 
     const handleChange = (ev) =>{
+        console.log(ev.target.value)
         setData({...data, [ev.target.name] : ev.target.value});
+        console.log(data)
     }
 
     function renderInput(type,name,value){
@@ -65,7 +68,9 @@ export default function ScheduleDetail(props){
                 {renderInput('text','title',data.title)}
                 {renderInput('text','subtitle',data.subtitle)}
                 {renderInput('datetime-local','startDate',moment(data.startDate).format('YYYY-MM-DDThh:mm'))}
+                <small>{moment(data.startDate).format('YYYY MMM DD hh:mm a')}</small>
                 {renderInput('datetime-local','deadline',moment(data.deadline).format('YYYY-MM-DDThh:mm'))}
+                <small>{moment(data.deadline).format('YYYY MMM DD hh:mm a')}</small>
                 <textarea name='description' onChange={handleChange} rows='5' maxLength='200' className='form-control my-3' value={data.description}
                     style={{maxHeight:'149px',minHeight:'50px'}}
                     disabled=
