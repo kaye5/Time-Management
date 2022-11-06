@@ -1,5 +1,5 @@
 const scheduleDB = require('../database/schedule')
-const moment = require('moment-timezone')
+const moment = require('moment-timezone').tz.setDefault('Asia/Jakarta')
 const mongoose = require('mongoose')
 const scheduleStat = ['waiting','on going','completed','overdue']
 
